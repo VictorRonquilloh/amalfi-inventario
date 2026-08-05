@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% block title %}Salidas{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2>Salidas</h2>
+    <a href="{% url 'movimientos:crear_salida' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> Nueva Salida
+    </a>
+</div>
+
+{% if messages %}
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+{% endif %}
+
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Fecha</th><th>Comprobante</th><th>Producto</th><th>Villa</th><th>Cantidad</th><th>Precio</th><th>Total</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for s in salidas %}
+            <tr>
+                <td>{{ s.fecha }}</td>
+                <td>{{ s.no_comprobante|default:"—" }}</td>
+                <td>{{ s.producto.descripcion }}</td>
+                <td>{{ s.villa }}</td>
+                <td>{{ s.cantidad }}</td>
+                <td>${{ s.precio }}</td>
+                <td>${{ s.total_gastado|floatformat:2 }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="7" class="text-muted">No hay salidas registradas</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

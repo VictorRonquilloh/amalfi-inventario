@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %}Ubicaciones{% endblock %}
+{% block content %}
+<h2 class="mb-4">Ubicaciones</h2>
+
+{% for urb in urbanizaciones %}
+<div class="card card-stat p-3 mb-3">
+    <h5><i class="bi bi-geo-alt-fill"></i> {{ urb.nombre }}</h5>
+    {% for manzana in urb.manzanas.all %}
+        <div class="ms-3 mt-2">
+            <strong>Manzana {{ manzana.numero }}</strong>
+            <div class="d-flex flex-wrap gap-2 mt-1">
+                {% for villa in manzana.villas.all %}
+                    <span class="badge bg-secondary">Villa {{ villa.numero }}</span>
+                {% empty %}
+                    <span class="text-muted small">Sin villas registradas</span>
+                {% endfor %}
+            </div>
+        </div>
+    {% empty %}
+        <p class="text-muted ms-3">Sin manzanas registradas</p>
+    {% endfor %}
+</div>
+{% empty %}
+<p class="text-muted">No hay urbanizaciones registradas. Puedes crearlas desde el <a href="/admin/">panel de administración</a>.</p>
+{% endfor %}
+{% endblock %}

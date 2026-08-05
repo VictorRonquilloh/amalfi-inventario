@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% block title %}Kardex Villa{% endblock %}
+{% block content %}
+<h2 class="mb-4">Kardex: Villa {{ villa.numero }} — Mz {{ villa.manzana.numero }} ({{ villa.manzana.urbanizacion }})</h2>
+
+<div class="card card-stat p-3 mb-3">
+    <span class="text-muted">Total gastado en esta villa</span>
+    <h3>${{ total|floatformat:2 }}</h3>
+</div>
+
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead><tr><th>Fecha</th><th>Comprobante</th><th>Producto</th><th>Cantidad</th><th>Precio</th><th>Subtotal</th></tr></thead>
+        <tbody>
+        {% for s in salidas %}
+            <tr>
+                <td>{{ s.fecha|date:"d \d\e F \d\e Y" }}</td>
+                <td>{{ s.no_comprobante|default:"—" }}</td>
+                <td>{{ s.producto.descripcion }}</td>
+                <td>{{ s.cantidad }}</td>
+                <td>${{ s.precio }}</td>
+                <td>${{ s.total_gastado|floatformat:2 }}</td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6" class="text-muted">Sin materiales despachados a esta villa</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+<a href="{% url 'reportes:lista_kardex_villas' %}" class="btn btn-secondary mt-3">Volver</a>
+{% endblock %}

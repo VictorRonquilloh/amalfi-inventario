@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h2 class="mb-4">Dashboard</h2>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card card-stat p-3">
+            <span class="text-muted">Total Productos</span>
+            <h3>{{ total_productos }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-stat p-3">
+            <span class="text-muted">Productos con Stock Bajo</span>
+            <h3 class="text-danger">{{ stock_bajo|length }}</h3>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card card-stat p-3">
+            <span class="text-muted">Total Gastado en Salidas</span>
+            <h3>${{ total_gastado|floatformat:2 }}</h3>
+        </div>
+    </div>
+</div>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <div class="card card-stat p-3">
+            <h5>Últimas Entradas</h5>
+            <table class="table table-sm">
+                <thead><tr><th>Fecha</th><th>Producto</th><th>Cant.</th></tr></thead>
+                <tbody>
+                {% for e in ultimas_entradas %}
+                    <tr><td>{{ e.fecha }}</td><td>{{ e.producto.descripcion }}</td><td>{{ e.cantidad }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="3" class="text-muted">Sin entradas registradas</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card card-stat p-3">
+            <h5>Últimas Salidas</h5>
+            <table class="table table-sm">
+                <thead><tr><th>Fecha</th><th>Producto</th><th>Villa</th><th>Cant.</th></tr></thead>
+                <tbody>
+                {% for s in ultimas_salidas %}
+                    <tr><td>{{ s.fecha }}</td><td>{{ s.producto.descripcion }}</td><td>{{ s.villa }}</td><td>{{ s.cantidad }}</td></tr>
+                {% empty %}
+                    <tr><td colspan="4" class="text-muted">Sin salidas registradas</td></tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

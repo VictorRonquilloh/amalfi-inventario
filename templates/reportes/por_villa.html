@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}Gasto por Villa{% endblock %}
+{% block content %}
+<h2 class="mb-4">Gasto por Villa</h2>
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead><tr><th>Villa</th><th>Manzana</th><th>Urbanización</th><th>Movimientos</th><th>Total Gastado</th></tr></thead>
+        <tbody>
+        {% for row in data %}
+            <tr>
+                <td>Villa {{ row.villa.numero }}</td>
+                <td>Mz {{ row.villa.manzana.numero }}</td>
+                <td>{{ row.villa.manzana.urbanizacion }}</td>
+                <td>{{ row.movimientos }}</td>
+                <td><strong>${{ row.total|floatformat:2 }}</strong></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="5" class="text-muted">Sin datos aún</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

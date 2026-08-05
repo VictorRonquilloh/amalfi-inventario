@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Productos{% endblock %}
+{% block content %}
+<h2 class="mb-4">Productos</h2>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-5">
+        <input type="text" name="q" value="{{ query }}" class="form-control"
+               placeholder="Buscar por código o descripción...">
+    </div>
+    <div class="col-md-4">
+        <select name="categoria" class="form-select">
+            <option value="">Todas las categorías</option>
+            {% for cat in categorias %}
+                <option value="{{ cat.id }}" {% if categoria_id|stringformat:"s" == cat.id|stringformat:"s" %}selected{% endif %}>
+                    {{ cat.nombre }}
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-3">
+        <button type="submit" class="btn btn-primary w-100">
+            <i class="bi bi-search"></i> Buscar
+        </button>
+    </div>
+</form>
+
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Código</th>
+            <th>Descripción</th>
+            <th>Categoría</th>
+            <th>Unidad</th>
+            <th>Último Precio Compra</th>
+            <th>Existencia</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for p in productos %}
+            <tr>
+                <td>{{ p.codigo }}</td>
+                <td>{{ p.descripcion }}</td>
+                <td>{{ p.categoria }}</td>
+                <td>{{ p.unidad }}</td>
+                <td>{% if p.ultimo_precio_compra %}${{ p.ultimo_precio_compra }}{% else %}—{% endif %}</td>
+                <td>
+                    {% if p.existencia <= 5 %}
+                        <span class="badge bg-danger">{{ p.existencia }}</span>
+                    {% else %}
+                        <span class="badge bg-success">{{ p.existencia }}</span>
+                    {% endif %}
+                </td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="6" class="text-muted">No hay productos registrados</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

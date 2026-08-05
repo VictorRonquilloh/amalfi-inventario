@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block title %}Kardex{% endblock %}
+{% block content %}
+<h2 class="mb-4">Kardex por Producto</h2>
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead><tr><th>Código</th><th>Producto</th><th>Existencia</th><th></th></tr></thead>
+        <tbody>
+        {% for p in productos %}
+            <tr>
+                <td>{{ p.codigo }}</td>
+                <td>{{ p.descripcion }}</td>
+                <td>{{ p.existencia }}</td>
+                <td><a href="{% url 'reportes:kardex_producto' p.id %}" class="btn btn-sm btn-outline-primary">Ver kardex</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

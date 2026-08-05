@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %}Kardex por Villa{% endblock %}
+{% block content %}
+<h2 class="mb-4">Kardex por Villa</h2>
+<div class="card card-stat p-3">
+    <table class="table table-hover">
+        <thead><tr><th>Villa</th><th>Manzana</th><th>Urbanización</th><th></th></tr></thead>
+        <tbody>
+        {% for v in villas %}
+            <tr>
+                <td>Villa {{ v.numero }}</td>
+                <td>Mz {{ v.manzana.numero }}</td>
+                <td>{{ v.manzana.urbanizacion }}</td>
+                <td><a href="{% url 'reportes:kardex_villa' v.id %}" class="btn btn-sm btn-outline-primary">Ver kardex</a></td>
+            </tr>
+        {% empty %}
+            <tr><td colspan="4" class="text-muted">No hay villas registradas</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

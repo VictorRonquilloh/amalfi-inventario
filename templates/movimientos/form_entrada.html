@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block title %}Nueva Entrada{% endblock %}
+{% block content %}
+<h2 class="mb-4">Nueva Entrada</h2>
+
+<div class="card card-stat p-4" style="max-width: 600px;">
+    <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label class="form-label">Fecha</label>
+            {{ form.fecha }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">No. Comprobante</label>
+            {{ form.no_comprobante }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Producto</label>
+            {{ form.producto }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Cantidad</label>
+            {{ form.cantidad }}
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Precio de Compra</label>
+            {{ form.precio_compra }}
+        </div>
+        <button type="submit" class="btn btn-primary">Guardar Entrada</button>
+        <a href="{% url 'movimientos:lista_entradas' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}
