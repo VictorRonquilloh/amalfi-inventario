@@ -19,6 +19,13 @@ class Producto(models.Model):
         ('m2', 'Metro cuadrado'),
         ('m', 'Metro'),
         ('kg', 'Kilogramo'),
+        ('Galon', 'Galón'),
+        ('Litro', 'Litro'),
+        ('Caneca', 'Caneca'),
+        ('Caja', 'Caja'),
+        ('Global', 'Global'),
+        ('Rollo', 'Rollo'),
+        ('Viaje', 'Viaje'),
     ]
 
     codigo = models.CharField(max_length=20, unique=True)
