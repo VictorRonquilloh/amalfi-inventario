@@ -5,13 +5,12 @@ from .models import Entrada, Salida
 class EntradaForm(forms.ModelForm):
     class Meta:
         model = Entrada
-        fields = ['fecha', 'no_comprobante', 'producto', 'cantidad', 'precio_compra']
+        fields = ['fecha', 'no_comprobante', 'producto', 'cantidad']  # <- sin precio_compra
         widgets = {
             'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'no_comprobante': forms.TextInput(attrs={'class': 'form-control'}),
             'producto': forms.Select(attrs={'class': 'form-select'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control'}),
-            'precio_compra': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
         }
 class SalidaForm(forms.ModelForm):
     class Meta:

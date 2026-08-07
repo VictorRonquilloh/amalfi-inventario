@@ -18,6 +18,7 @@ def crear_entrada(request):
         if form.is_valid():
             entrada = form.save(commit=False)
             entrada.usuario = request.user
+            entrada.precio_compra = entrada.producto.precio_compra  # <- agrega esta línea
             entrada.save()
             messages.success(request, 'Entrada registrada correctamente.')
             return redirect('movimientos:lista_entradas')
