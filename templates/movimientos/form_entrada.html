@@ -27,3 +27,14 @@
     </form>
 </div>
 {% endblock %}
+
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        $('#id_producto').select2({
+            placeholder: "Buscar producto...",
+            width: '100%'
+        });
+    });
+</script>
+{% endblock %}
