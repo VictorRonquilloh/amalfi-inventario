@@ -38,7 +38,7 @@ def crear_salida(request):
         if form.is_valid():
             salida = form.save(commit=False)
             salida.usuario = request.user
-            salida.precio = salida.producto.precio_venta
+            salida.precio = salida.producto.precio_compra  # <- cambio aquí
             salida.save()
             messages.success(request, 'Salida registrada correctamente.')
             return redirect('movimientos:lista_salidas')
