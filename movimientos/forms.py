@@ -15,14 +15,13 @@ class EntradaForm(forms.ModelForm):
 class SalidaForm(forms.ModelForm):
     class Meta:
         model = Salida
-        fields = ['fecha', 'no_comprobante', 'producto', 'cantidad', 'villa', 'precio']
+        fields = ['fecha', 'no_comprobante', 'producto', 'cantidad', 'villa']
         widgets = {
             'fecha': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
             'no_comprobante': forms.TextInput(attrs={'class': 'form-control'}),
             'producto': forms.Select(attrs={'class': 'form-select'}),
             'cantidad': forms.NumberInput(attrs={'class': 'form-control'}),
             'villa': forms.Select(attrs={'class': 'form-select'}),
-            'precio': forms.NumberInput(attrs={'class': 'form-control', 'step': '0.01'}),
         }
 
     def clean(self):
