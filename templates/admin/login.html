@@ -1,0 +1,205 @@
+{% load i18n static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ site_title|default:"Amalfi Admin" }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+
+        html, body {
+            height: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(-45deg, #0c1220, #16202f, #1a2b45, #0e1420);
+            background-size: 400% 400%;
+            animation: gradientShift 16s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Partículas doradas flotantes */
+        .particle {
+            position: fixed;
+            border-radius: 50%;
+            background: rgba(201, 162, 39, 0.35);
+            pointer-events: none;
+            animation: floatUp linear infinite;
+        }
+        @keyframes floatUp {
+            0%   { transform: translateY(0) translateX(0); opacity: 0; }
+            10%  { opacity: 1; }
+            90%  { opacity: 1; }
+            100% { transform: translateY(-110vh) translateX(20px); opacity: 0; }
+        }
+
+        .login-card {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 420px;
+            background: rgba(20, 28, 43, 0.65);
+            backdrop-filter: blur(18px);
+            -webkit-backdrop-filter: blur(18px);
+            border: 1px solid rgba(201, 162, 39, 0.25);
+            border-radius: 18px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+            padding: 46px 40px;
+            animation: fadeInUp 0.7s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(24px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .brand-mark {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .brand-mark i {
+            font-size: 2.4rem;
+            color: #c9a227;
+            display: block;
+            margin-bottom: 8px;
+        }
+        .brand-mark h1 {
+            font-family: 'Playfair Display', serif;
+            color: #e2c25a;
+            font-size: 1.7rem;
+            font-weight: 700;
+            letter-spacing: 0.4px;
+        }
+        .brand-mark p {
+            color: #8fa0b8;
+            font-size: 0.85rem;
+            margin-top: 4px;
+            letter-spacing: 0.3px;
+        }
+
+        .field-group { margin-bottom: 20px; }
+        .field-group label {
+            display: block;
+            color: #8fa0b8;
+            font-size: 0.82rem;
+            font-weight: 500;
+            margin-bottom: 7px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .field-group input {
+            width: 100%;
+            padding: 12px 14px;
+            background: rgba(26, 36, 54, 0.8);
+            border: 1px solid #263248;
+            border-radius: 9px;
+            color: #e8ecf4;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .field-group input:focus {
+            outline: none;
+            border-color: #c9a227;
+            box-shadow: 0 0 0 3px rgba(201,162,39,0.15);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            margin-top: 10px;
+            background: linear-gradient(135deg, #c9a227, #a9821d);
+            border: none;
+            border-radius: 9px;
+            color: #16202f;
+            font-weight: 700;
+            font-size: 0.95rem;
+            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.25s ease;
+        }
+        .btn-login:hover {
+            background: linear-gradient(135deg, #e2c25a, #c9a227);
+            transform: translateY(-1px);
+            box-shadow: 0 8px 20px rgba(201,162,39,0.25);
+        }
+
+        .errornote {
+            background: rgba(220, 53, 69, 0.12);
+            border: 1px solid rgba(220, 53, 69, 0.35);
+            color: #ff8a94;
+            padding: 10px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            margin-bottom: 18px;
+        }
+
+        .footer-note {
+            text-align: center;
+            color: #556478;
+            font-size: 0.75rem;
+            margin-top: 26px;
+            letter-spacing: 0.3px;
+        }
+    </style>
+</head>
+<body>
+
+    {% for i in "12345678" %}
+        <div class="particle" style="
+            left: {{ forloop.counter0|add:1 }}0%;
+            width: {{ forloop.counter|add:2 }}px;
+            height: {{ forloop.counter|add:2 }}px;
+            animation-duration: {{ forloop.counter|add:10 }}s;
+            animation-delay: -{{ forloop.counter }}s;
+        "></div>
+    {% endfor %}
+
+    <div class="login-card">
+        <div class="brand-mark">
+            <i class="bi bi-building"></i>
+            <h1>Amalfi</h1>
+            <p>Sistema de Gestión de Inventarios</p>
+        </div>
+
+        {% if form.errors and not form.non_field_errors %}
+            <div class="errornote">{% trans "Usuario o contraseña incorrectos. Intenta de nuevo." %}</div>
+        {% endif %}
+
+        {% if form.non_field_errors %}
+            {% for error in form.non_field_errors %}
+                <div class="errornote">{{ error }}</div>
+            {% endfor %}
+        {% endif %}
+
+        <form action="{{ app_path }}" method="post" id="login-form">
+            {% csrf_token %}
+            <div class="field-group">
+                <label for="id_username">{% trans 'Usuario' %}</label>
+                {{ form.username }}
+            </div>
+            <div class="field-group">
+                <label for="id_password">{% trans 'Contraseña' %}</label>
+                {{ form.password }}
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+            <button type="submit" class="btn-login">{% trans 'Iniciar sesión' %}</button>
+        </form>
+
+        <div class="footer-note">Amalfi &copy; {% now "Y" %} — Acceso restringido</div>
+    </div>
+
+</body>
+</html>
