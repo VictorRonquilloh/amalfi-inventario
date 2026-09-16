@@ -194,7 +194,7 @@
                 <label for="id_password">{% trans 'Contraseña' %}</label>
                 {{ form.password }}
             </div>
-            <input type="hidden" name="next" value="{{ next }}">
+            <input type="hidden" name="next" value="{{ next|default:'/' }}">
             <button type="submit" class="btn-login">{% trans 'Iniciar sesión' %}</button>
         </form>
 
