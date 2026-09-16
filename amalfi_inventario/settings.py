@@ -131,3 +131,5 @@ STORAGES = {
 
 LOGIN_URL = '/admin/login/'
 LOGIN_REDIRECT_URL = '/'
+CSRF_TRUSTED_ORIGINS = ['https://amalfi-inventario.onrender.com']
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
